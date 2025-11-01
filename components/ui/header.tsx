@@ -5,12 +5,23 @@ import Logo from "./logo";
 
 export default function Header() {
   return (
-    <header className="z-30 mt-2 w-full md:mt-5">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="relative flex h-14 items-center justify-between gap-3 rounded-2xl bg-gray-900/90 px-3 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] after:absolute after:inset-0 after:-z-10 after:backdrop-blur-xs">
+    <header className="absolute top-0 left-0 w-full z-50 pt-4 pointer-events-none">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 flex justify-center">
+        {/* Floating nav capsule */}
+        <div
+          className="fixed top-3 md:top-5 flex h-16 items-center justify-between gap-3
+          rounded-2xl px-4 md:px-6
+          bg-[radial-gradient(circle_at_top_left,rgba(255,230,128,0.08),rgba(0,0,0,0.9))]
+          border border-yellow-400/10
+          backdrop-blur-md shadow-[0_0_25px_rgba(255,230,128,0.15)]
+          max-w-5xl w-[95%] md:w-[80%]
+          pointer-events-auto transition-all duration-300"
+        >
           {/* Site branding */}
           <div className="flex flex-1 items-center">
-            <Logo />
+            <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center bg-black/30 shadow-[0_0_10px_rgba(255,230,128,0.3)]">
+              <Logo className="w-full h-full object-cover rounded-full" />
+            </div>
           </div>
 
           {/* Desktop sign in links */}
@@ -18,7 +29,7 @@ export default function Header() {
             <li>
               <Link
                 href="/signin"
-                className="btn-sm relative bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] py-[5px] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]"
+                className="btn-sm relative bg-[linear-gradient(to_right,rgba(255,230,128,0.15),rgba(20,20,20,1))] py-[5px] text-yellow-100 hover:text-white hover:bg-[linear-gradient(to_right,rgba(255,230,128,0.25),rgba(40,40,40,1))] transition-all duration-300 rounded-lg"
               >
                 Sign In
               </Link>
@@ -26,7 +37,7 @@ export default function Header() {
             <li>
               <Link
                 href="/signup"
-                className="btn-sm bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] py-[5px] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%]"
+                className="btn-sm bg-[linear-gradient(to_top,rgba(255,230,128,0.5),rgba(255,255,200,0.2))] py-[5px] text-black font-semibold shadow-[0_0_10px_rgba(255,230,128,0.3)] hover:bg-[linear-gradient(to_top,rgba(255,230,128,0.7),rgba(255,255,200,0.3))] transition-all duration-300 rounded-lg"
               >
                 Register
               </Link>

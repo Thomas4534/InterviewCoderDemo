@@ -1,193 +1,185 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import BlurredShapeGray from "@/public/images/blurred-shape-gray.svg";
 import BlurredShape from "@/public/images/blurred-shape.svg";
-import FeaturesImage from "@/public/images/features.png";
+
+import Feature1 from "@/public/images/feature-1.svg";
+import Feature2 from "@/public/images/feature-2.svg";
+import Feature3 from "@/public/images/feature-3.svg";
+import Icon1 from "@/public/images/icon-1.svg";
+import Icon2 from "@/public/images/icon-2.svg";
+import Icon3 from "@/public/images/icon-3.svg";
+
+function FloatingParticles() {
+  const [particles, setParticles] = useState<
+    { top: string; left: string; delay: number; duration: number }[]
+  >([]);
+
+  useEffect(() => {
+    const newParticles = Array.from({ length: 14 }).map(() => ({
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      delay: Math.random() * 2,
+      duration: 6 + Math.random() * 6,
+    }));
+    setParticles(newParticles);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 -z-10 overflow-hidden">
+      {particles.map((p, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-yellow-400 rounded-full opacity-70 blur-[1px]"
+          animate={{
+            y: ["0%", "100%"],
+            x: ["0%", "10%"],
+            opacity: [0.3, 0.8, 0.3],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+          style={{ top: p.top, left: p.left }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function Features() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  const features = [
+    {
+      title: "Modular Architecture",
+      desc: "Adapt effortlessly with a system built to evolve. Plug, extend, and optimize as your product grows.",
+      img: Feature1,
+      icon: Icon1,
+    },
+    {
+      title: "Predictive Insights",
+      desc: "Gain instant visibility into performance and user behavior with AI-driven analytics.",
+      img: Feature2,
+      icon: Icon2,
+    },
+    {
+      title: "Real-time Collaboration",
+      desc: "Empower teams with synchronized updates, no matter the distance or time zone.",
+      img: Feature3,
+      icon: Icon3,
+    },
+  ];
+
   return (
-    <section className="relative">
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 -mt-20 -translate-x-1/2"
-        aria-hidden="true"
-      >
-        <Image
-          className="max-w-none"
-          src={BlurredShapeGray}
-          width={760}
-          height={668}
-          alt="Blurred shape"
-        />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#141414] via-[#1a1a1a] to-[#0f0f0f] text-yellow-100 py-28">
+      {/* ✨ Floating Particles */}
+      <FloatingParticles />
+
+      {/* Background Blurs */}
+      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 -translate-x-1/2 opacity-25 blur-2xl">
+        <Image src={BlurredShapeGray} width={760} height={668} alt="" />
       </div>
-      <div
-        className="pointer-events-none absolute bottom-0 left-1/2 -z-10 -mb-80 -translate-x-[120%] opacity-50"
-        aria-hidden="true"
-      >
-        <Image
-          className="max-w-none"
-          src={BlurredShape}
-          width={760}
-          height={668}
-          alt="Blurred shape"
-        />
+      <div className="pointer-events-none absolute bottom-0 right-1/2 -z-10 translate-x-[60%] opacity-30 blur-3xl">
+        <Image src={BlurredShape} width={760} height={668} alt="" />
       </div>
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="border-t py-12 [border-image:linear-gradient(to_right,transparent,--theme(--color-slate-400/.25),transparent)1] md:py-20">
-          {/* Section header */}
-          <div className="mx-auto max-w-3xl pb-4 text-center md:pb-12">
-            <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
-              <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Advanced Controls
-              </span>
-            </div>
-            <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Built for modern product teams
-            </h2>
-            <p className="text-lg text-indigo-200/65">
-              Open AI reads and understands your files, and with nothing more
-              than a single line of feedback, so you can go further than the
-              speed of thought.
-            </p>
-          </div>
-          <div className="flex justify-center pb-4 md:pb-12" data-aos="fade-up">
-            <Image
-              className="max-w-none"
-              src={FeaturesImage}
-              width={1104}
-              height={384}
-              alt="Features"
-            />
-          </div>
-          {/* Items */}
-          <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path d="M0 0h14v17H0V0Zm2 2v13h10V2H2Z" />
-                <path
-                  fillOpacity=".48"
-                  d="m16.295 5.393 7.528 2.034-4.436 16.412L5.87 20.185l.522-1.93 11.585 3.132 3.392-12.55-5.597-1.514.522-1.93Z"
-                />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Project Milestones
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path fillOpacity=".48" d="M7 8V0H5v8h2Zm12 16v-4h-2v4h2Z" />
-                <path d="M19 6H0v2h17v8H7v-6H5v8h19v-2h-5V6Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Team Views
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path d="M23.414 6 18 .586 16.586 2l3 3H7a6 6 0 0 0-6 6h2a4 4 0 0 1 4-4h12.586l-3 3L18 11.414 23.414 6Z" />
-                <path
-                  fillOpacity=".48"
-                  d="M13.01 12.508a2.5 2.5 0 0 0-3.502.482L1.797 23.16.203 21.952l7.71-10.17a4.5 4.5 0 1 1 7.172 5.437l-4.84 6.386-1.594-1.209 4.841-6.385a2.5 2.5 0 0 0-.482-3.503Z"
-                />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Advanced Search
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path
-                  fillOpacity=".48"
-                  d="m3.031 9.05-.593-.805 1.609-1.187.594.804a6.966 6.966 0 0 1 0 8.276l-.594.805-1.61-1.188.594-.805a4.966 4.966 0 0 0 0-5.9Z"
-                />
-                <path d="m7.456 6.676-.535-.845 1.69-1.07.534.844a11.944 11.944 0 0 1 0 12.789l-.535.845-1.69-1.071.536-.845a9.944 9.944 0 0 0 0-10.647Z" />
-                <path
-                  d="m11.888 4.35-.514-.858 1.717-1.027.513.858a16.9 16.9 0 0 1 2.4 8.677 16.9 16.9 0 0 1-2.4 8.676l-.513.859-1.717-1.028.514-.858A14.9 14.9 0 0 0 14.003 12a14.9 14.9 0 0 0-2.115-7.65Z"
-                  opacity=".48"
-                />
-                <path d="m16.321 2-.5-.866 1.733-1 .5.866A22 22 0 0 1 21 12c0 3.852-1.017 7.636-2.948 10.97l-.502.865-1.73-1.003.501-.865A19.878 19.878 0 0 0 19 12a20 20 0 0 0-2.679-10Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Strategic Initiatives
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path
-                  fillOpacity=".48"
-                  d="M12 8.8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
-                />
-                <path d="m7.454 2.891.891-.454L7.437.655l-.891.454a12 12 0 0 0 0 21.382l.89.454.91-1.781-.892-.455a10 10 0 0 1 0-17.818ZM17.456 1.11l-.891-.454-.909 1.782.891.454a10 10 0 0 1 0 17.819l-.89.454.908 1.781.89-.454a12 12 0 0 0 0-21.382Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Flexible Workflows
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-            <article>
-              <svg
-                className="mb-3 fill-indigo-500"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-              >
-                <path
-                  fillOpacity=".48"
-                  d="M19 8h5v2h-5V8Zm-4 5h9v2h-9v-2Zm9 5H11v2h13v-2Z"
-                />
-                <path d="M19.406 3.844 6.083 20.497.586 15 2 13.586l3.917 3.917L17.844 2.595l1.562 1.25Z" />
-              </svg>
-              <h3 className="mb-1 font-nacelle text-[1rem] font-semibold text-gray-200">
-                Unified Timeline
-              </h3>
-              <p className="text-indigo-200/65">
-                Track progress across custom flows for your team. Find the right
-                balance for the user, privacy and security.
-              </p>
-            </article>
-          </div>
+
+      {/* 🌟 Content */}
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-3xl text-center mb-20"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-gradient-to-r before:from-transparent before:to-yellow-400/60 after:h-px after:w-8 after:bg-gradient-to-l after:from-transparent after:to-yellow-400/60"
+          >
+            <span className="bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent text-sm uppercase tracking-wider">
+              Intelligent Infrastructure
+            </span>
+          </motion.div>
+
+          {/* Modern Cinematic Title */}
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="relative text-5xl md:text-6xl font-extrabold tracking-tight mt-4"
+          >
+            <span className="bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-300 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(255,240,150,0.2)]">
+              Features Designed for Scale
+            </span>
+            {/* Glowing underline accent */}
+            <span className="absolute left-1/2 -bottom-3 h-[3px] w-32 -translate-x-1/2 bg-gradient-to-r from-yellow-400/20 via-yellow-300/60 to-yellow-400/20 rounded-full blur-sm"></span>
+          </motion.h2>
+
+          <p className="mt-8 text-yellow-100/70 text-lg leading-relaxed max-w-2xl mx-auto">
+            From seamless integrations to intelligent automation — build,
+            deploy, and innovate with a platform engineered for visionaries.
+          </p>
+        </motion.div>
+
+        {/* Feature Sections */}
+        <div className="space-y-28">
+          {features.map((f, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.2, duration: 0.8 }}
+              viewport={{ once: true }}
+              className={`flex flex-col md:flex-row items-center gap-12 ${
+                i % 2 === 1 ? "md:flex-row-reverse" : ""
+              }`}
+            >
+              {/* Feature Text */}
+              <div className="flex-1 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start mb-4">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-500 shadow-[0_0_25px_rgba(255,230,100,0.3)] flex items-center justify-center">
+                    <Image src={f.icon} alt="icon" width={32} height={32} />
+                  </div>
+                </div>
+                <h3 className="text-2xl font-semibold text-yellow-200 mb-3">
+                  {f.title}
+                </h3>
+                <p className="text-yellow-100/80 text-base leading-relaxed max-w-md mx-auto md:mx-0">
+                  {f.desc}
+                </p>
+              </div>
+
+              {/* Feature Image */}
+              <div className="flex-1">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ type: "spring", stiffness: 150 }}
+                  className="relative rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(255,230,120,0.15)]"
+                >
+                  <Image
+                    src={f.img}
+                    alt={f.title}
+                    className="w-full h-auto object-contain rounded-2xl"
+                    priority
+                  />
+                  {/* Soft gradient overlay for cinematic look */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111]/40 via-transparent to-transparent" />
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
