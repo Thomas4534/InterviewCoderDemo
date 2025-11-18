@@ -140,7 +140,7 @@ function HeroHome() {
         className="relative w-full max-w-6xl px-6 text-center z-10"
       >
         <p className="text-yellow-200/90 text-lg mb-6">
-          A Few Words from Our CEO's Roy and Abdulla
+          A Few Words from Our CEO's Abdulla
         </p>
 
         <div className="relative rounded-[2.5rem] overflow-hidden shadow-[0_0_80px_rgba(255,230,120,0.25)] border border-yellow-400/30 backdrop-blur-md bg-white/5">
